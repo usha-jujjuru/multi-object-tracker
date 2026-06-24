@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.env
+venv/
+.venv/
+
+# Model weights
+*.pt
+*.onnx
+
+# Output videos and logs (ignore, not sample)
+output/
+*.mp4
+*.avi
+*.json
+!sample_video/*.mp4
+
+# IDE
+.vscode/
+.idea/
+*.DS_Store
