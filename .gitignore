@@ -14,6 +14,7 @@ output/
 *.avi
 *.json
 !sample_video/*.mp4
+!preview.jpg
 
 # IDE
 .vscode/

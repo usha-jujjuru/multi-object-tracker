@@ -4,6 +4,8 @@ Real-time multi-object tracking for traffic and urban scenes using **YOLOv8** fo
 
 Each detected object receives a persistent ID across frames with a visible trajectory trail.
 
+![Tracking Preview](preview.jpg)
+
 ---
 
 ## How It Works
