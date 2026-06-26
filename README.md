@@ -6,32 +6,30 @@ Each detected object receives a persistent ID across frames with a visible traje
 
 ![Tracking Preview](preview.jpg)
 
----
-
 ## How It Works
 
 ```
 Video frame
-    │
-    ▼
-YOLOv8 Detection  →  bounding boxes + class labels
-    │
-    ▼
-Kalman Filter     →  predicts each track's next position
-    │
-    ▼
-Hungarian Algorithm →  optimal detection-to-track assignment (IoU cost matrix)
-    │
-    ▼
-Track Lifecycle   →  TENTATIVE → CONFIRMED → LOST → removed
-    │
-    ▼
-Annotated output  →  tracked video + JSON log
+    |
+    v
+YOLOv8 Detection   ->  bounding boxes + class labels
+    |
+    v
+Kalman Filter      ->  predicts each track's next position
+    |
+    v
+Hungarian Algorithm -> optimal detection-to-track assignment (IoU cost matrix)
+    |
+    v
+Track Lifecycle    ->  TENTATIVE -> CONFIRMED -> LOST -> removed
+    |
+    v
+Annotated output   ->  tracked video + JSON log
 ```
 
-## Kalman Filter State
+### Kalman Filter State
 
-The filter uses a **constant-velocity motion model**:
+The filter uses a constant-velocity motion model:
 
 ```
 State:       [cx, cy, w, h, vcx, vcy, vw, vh]
@@ -39,10 +37,8 @@ Measurement: [cx, cy, w, h]
 ```
 
 - Predict step: propagates state forward using the transition matrix
-- Update step: corrects prediction using the new detection measurement
-- Gain (K): balances trust between prediction and measurement
-
----
+- Update step: corrects the prediction using the new detection measurement
+- Kalman gain balances trust between prediction and measurement noise
 
 ## Quickstart
 
@@ -54,9 +50,7 @@ pip install -r requirements.txt
 python detect_and_track.py --video sample_video/traffic.mp4 --save-json
 ```
 
-Output saved to `output/tracked.mp4` and `output/tracked.json`.
-
----
+Output is saved to `output/tracked.mp4` and `output/tracked.json`.
 
 ## Usage
 
@@ -83,14 +77,9 @@ python detect_and_track.py \
 | `--min-hits` | 3 | Detections before a track is confirmed |
 | `--save-json` | off | Save per-frame JSON tracking log |
 
----
-
 ## Output
 
-**Tracked video** — each object has:
-- Unique color-coded bounding box
-- Label: `ID:3 car 0.87`
-- Trajectory trail showing movement path
+**Tracked video:** each object has a unique color-coded bounding box, a label showing ID, class name and confidence (e.g. `ID:3 car 0.87`), and a trajectory trail showing the movement path.
 
 **JSON log** (per frame):
 ```json
@@ -116,28 +105,24 @@ Active : 5
 Total  : 12
 ```
 
----
-
 ## Project Structure
 
 ```
 multi-object-tracker/
 ├── tracker/
-│   ├── kalman_filter.py   # Kalman filter — state prediction and update
-│   ├── track.py           # Track class — lifecycle, state, trajectory
-│   ├── tracker.py         # MultiObjectTracker — association pipeline
-│   └── visualizer.py      # Drawing — boxes, trails, stats overlay
+│   ├── kalman_filter.py   # Kalman filter for state prediction and update
+│   ├── track.py           # Track class managing lifecycle, state, and trajectory
+│   ├── tracker.py         # Multi-object tracker with IoU association pipeline
+│   └── visualizer.py      # Bounding boxes, trajectory trails, and stats overlay
 ├── detect_and_track.py    # Entry point
 ├── sample_video/          # Sample test video
 ├── output/                # Tracked video and JSON log (git-ignored)
 └── requirements.txt
 ```
 
----
-
 ## Author
 
 **Usha Rani Jujjuru**
-M.Sc. Automotive Software Engineering — TU Chemnitz
+M.Sc. Automotive Software Engineering, TU Chemnitz
 Perception Engineer | Computer Vision | ADAS | Autonomous Driving
 [LinkedIn](https://linkedin.com/in/usha-rani-jujjuru) · [GitHub](https://github.com/usha-jujjuru)
