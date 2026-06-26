@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.optimize import linear_sum_assignment
-from tracker.track import Track, TrackState
+from tracker.track import Track
 
 
 def compute_iou(bbox1, bbox2):

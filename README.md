@@ -75,6 +75,7 @@ python detect_and_track.py \
 | Argument | Default | Description |
 |----------|---------|-------------|
 | `--video` | required | Input video path |
+| `--output` | output/tracked.mp4 | Output video path |
 | `--model` | yolov8n | YOLOv8 variant (n/s/m/l/x) |
 | `--conf` | 0.3 | Detection confidence threshold |
 | `--iou` | 0.3 | IoU threshold for track association |
